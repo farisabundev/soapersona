@@ -6,7 +6,9 @@ One JSON object per line, appended by the Orchestrator on every persona invocati
 {"ts": "2026-11-19T13:40:00Z", "persona": "frontend", "model": "sonnet", "task": "short description of what was asked", "outcome": "ok", "notes": "anything Consigliere should know"}
 ```
 
-`outcome` is one of: `ok`, `gate_rejected`, `issue`.
+`outcome` is one of: `ok`, `gate_rejected`, `issue`, `pending`.
+
+`pending` means the persona did everything it could but couldn't fully verify the result — typically a structural blocker outside the ticket's scope (e.g. an environment/gate limitation) forced a substitute check instead of the real one. Nothing failed, so it isn't `issue`; nothing was unverified by choice or confirmed outright, so it isn't `ok` either. Use `notes` to say what was blocked and what was done instead, so a later sweep for `pending` entries knows what still needs a real check.
 
 `notes` is where scope drift, a wrong persona pick, or an unclear brief gets recorded — this is what Consigliere reads for patterns. Empty string if there's nothing worth flagging.
 
